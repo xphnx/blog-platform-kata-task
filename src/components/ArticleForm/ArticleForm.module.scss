@@ -1,0 +1,82 @@
+section {
+  padding-bottom: 30px;
+}
+
+.form {
+  background: #fff;
+  padding: 48px 32px;
+  margin: 34px 0;
+  box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07),
+    0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198),
+    0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275),
+    0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035),
+    0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725),
+    0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
+  border-radius: 6px;
+}
+
+.title {
+  text-align: center;
+}
+
+.input,
+.textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 21px;
+}
+
+.label {
+  display: block;
+}
+
+.tag {
+  width: 300px;
+  display: inline-block;
+}
+
+.tag-button {
+  border-radius: 4px;
+  padding: 8px 20px;
+  background: none;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.delete {
+  border: 1px solid #f5222d;
+  color: #f5222d;
+}
+
+.add {
+  border: 1px solid #1890ff;
+  color: #1890ff;
+}
+
+.submit {
+  display: block;
+  border: none;
+  color: #fff;
+  background: #1890ff;
+  padding: 8px 10px;
+  width: 320px;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+form .input-error,
+form .input-error:focus {
+  border-color: red;
+  outline: none;
+  margin-bottom: 0;
+}
+
+.error {
+  color: red;
+  margin-bottom: 8px;
+}
