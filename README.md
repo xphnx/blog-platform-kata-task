@@ -7,3 +7,4 @@
 - Typescript
 - Vercel
 
+## Vercel: https://blog-platform-kata-task.vercel.app/
