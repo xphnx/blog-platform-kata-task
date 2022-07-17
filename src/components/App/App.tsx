@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import RequireAuth from '../../hoc/RequireAuth';
+import UserAuthorized from '../../hoc/UserAuthorized';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import ArticlesListPage from '../../pages/ArticlesListPage/ArticlesListPage';
 import EditArticlePage from '../../pages/EditArticlePage/EditArticlePage';
@@ -29,8 +30,22 @@ const App: FC = () => {
         <Route index element={<ArticlesListPage />} />
         <Route path="articles" element={<ArticlesListPage />} />
         <Route path="articles/:id" element={<SingleArticlePage />} />
-        <Route path="sign-up" element={<SignUpPage />} />
-        <Route path="sign-in" element={<SignInPage />} />
+        <Route
+          path="sign-up"
+          element={
+            <UserAuthorized>
+              <SignUpPage />
+            </UserAuthorized>
+          }
+        />
+        <Route
+          path="sign-in"
+          element={
+            <UserAuthorized>
+              <SignInPage />
+            </UserAuthorized>
+          }
+        />
         <Route
           path="/profile"
           element={

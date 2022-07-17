@@ -20,6 +20,7 @@ const SignInPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading, error } = useAppSelector((state) => state.user);
+
   let isServerError = false;
   if (error) {
     // @ts-ignore: Unreachable code error

@@ -69,6 +69,7 @@ const userSlice = createSlice({
   reducers: {
     logOut: (state: UserStateType) => {
       localStorage.removeItem('token');
+      localStorage.removeItem('isAuth');
       state.user = null;
     },
   },
@@ -76,7 +77,10 @@ const userSlice = createSlice({
     builder
       .addMatcher(isFulfilled, (state, action) => {
         state.user = action.payload.user;
-        if (state.user) localStorage.setItem('token', state.user.token);
+        if (state.user) {
+          localStorage.setItem('token', state.user.token);
+          localStorage.setItem('isAuth', 'true');
+        }
         state.isLoading = false;
       })
       .addMatcher(isPending, (state) => {
