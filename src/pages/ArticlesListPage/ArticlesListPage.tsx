@@ -27,8 +27,13 @@ const ArticlesListPage: FC = () => {
   const handleChangePage = (page: number): void =>
     dispatch(changeCurrentPage(page));
 
+  const isThereNoArticles = !!articles.length;
+
   return (
     <section>
+      {!isLoading && !error && !isThereNoArticles && (
+        <Notification message="Не загружено ни одной статьи!" />
+      )}
       {error && <Notification message={error} />}
       {isLoading ? (
         <Loader size="large" />
@@ -37,14 +42,16 @@ const ArticlesListPage: FC = () => {
           {articles.map((article) => (
             <Article key={article.slug} {...article} />
           ))}
-          <Pagination
-            current={currentPage}
-            size="small"
-            total={totalArticles}
-            pageSize={5}
-            onChange={handleChangePage}
-            showSizeChanger={false}
-          />
+          {!error && isThereNoArticles && (
+            <Pagination
+              current={currentPage}
+              size="small"
+              total={totalArticles}
+              pageSize={5}
+              onChange={handleChangePage}
+              showSizeChanger={false}
+            />
+          )}
         </>
       )}
     </section>
