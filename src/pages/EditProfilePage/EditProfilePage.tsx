@@ -17,6 +17,7 @@ const EditProfilePage: FC = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<UpdateUser>({
     mode: 'onChange',
@@ -26,28 +27,44 @@ const EditProfilePage: FC = () => {
   const { isLoading, user, error } = useAppSelector((state) => state.user);
   const token = user ? user.token : '';
 
+  let isServerError = false;
+  if (error) {
+    // @ts-ignore: Unreachable code error
+    isServerError = !!error.errors.username;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit: SubmitHandler<UpdateUser> = async (data: any) => {
     for (const key in data) {
       if (!data[key]) delete data[key];
     }
-    const { type } = await dispatch(
+    const response = await dispatch(
       updateProfile({ user: { ...data, token } })
     );
 
-    if (!type.endsWith('rejected')) navigate('/', { replace: true });
+    if (response.type.endsWith('rejected')) {
+      if (response.payload.errors.username) {
+        setError('username', {
+          type: 'server',
+          message: `Username ${response.payload.errors.username}`,
+        });
+      }
+    } else {
+      navigate('/', { replace: true });
+    }
   };
 
   return (
     <section className={classes['form-container']}>
       {/* @ts-ignore: Unreachable code error */}
-      {error && <Notification message={error.errorMessage} />}
+      {error && !isServerError && <Notification message={error.errorMessage} />}
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={classes.title}>Edit Profile</h2>
         <label>
           Username
           <input
             type="text"
+            defaultValue={user?.username}
             className={errors.username && classes['input-error']}
             {...register('username', {
               required: 'Username is required',
@@ -70,6 +87,7 @@ const EditProfilePage: FC = () => {
           Email address
           <input
             type="text"
+            defaultValue={user?.email}
             className={errors.email && classes['input-error']}
             {...register('email', {
               required: 'Email is required',

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
-import { useAppSelector } from '../hooks/useAppSelector';
 
 interface RequireAuthProps {
   children: JSX.Element;
@@ -8,9 +7,9 @@ interface RequireAuthProps {
 
 const RequireAuth: FC<RequireAuthProps> = ({ children }) => {
   const location = useLocation();
-  const { user } = useAppSelector((state) => state.user);
+  const isAuth = localStorage.getItem('isAuth');
 
-  if (!user) return <Navigate to="/sign-in" state={{ from: location }} />;
+  if (!isAuth) return <Navigate to="/sign-in" state={{ from: location }} />;
   return children;
 };
 
