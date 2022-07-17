@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://kata.academy:8021/api',
+  baseURL: 'https://blog.kata.academy/api',
 });
 
 axiosInstance.interceptors.request.use(
