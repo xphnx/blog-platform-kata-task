@@ -17,7 +17,7 @@ const EditArticlePage: FC = () => {
   const { error } = useAppSelector((state) => state.articles);
 
   let tagList = article?.tagList.map((tag) => ({ value: tag, id: uuidv4() }));
-  tagList = tagList?.length ? tagList : [{ id: 'First', value: '' }];
+  tagList = tagList?.length ? tagList : [];
   const [tags, setTags] = useState(tagList);
 
   return (

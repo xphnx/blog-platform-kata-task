@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -38,6 +38,8 @@ const ArticleForm: FC<ArticleFormProps> = ({
     formState: { errors },
   } = useForm<UpdateArticle>();
 
+  const [newTag, setNewTag] = useState('');
+
   const onSubmit: SubmitHandler<UpdateArticle> = async (data) => {
     const tagsValues = tags
       .map((tag) => tag.value.trim())
@@ -65,11 +67,13 @@ const ArticleForm: FC<ArticleFormProps> = ({
       if (tg.id === e.target.name) tg.value = e.target.value;
       return tg;
     });
-    setTag(updatedTags);
+    if (e.target.name !== 'First') setTag(updatedTags);
   };
 
   const handleAddTag = (): void => {
-    setTag([...tags, { id: uuidv4(), value: '' }]);
+    tags.push({ id: uuidv4(), value: newTag });
+    setTag(tags);
+    setNewTag('');
   };
 
   const handleDeleteTag = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -144,26 +148,34 @@ const ArticleForm: FC<ArticleFormProps> = ({
                 onChange={changeTagHandler}
                 placeholder="Tag"
               />
-              {tags.length > 1 && (
-                <button
-                  type="button"
-                  name={tag.id}
-                  className={`${classes['tag-button']} ${classes.delete}`}
-                  onClick={handleDeleteTag}
-                >
-                  Delete
-                </button>
-              )}
               <button
                 type="button"
-                className={`${classes['tag-button']} ${classes.add}`}
-                onClick={handleAddTag}
+                name={tag.id}
+                className={`${classes['tag-button']} ${classes.delete}`}
+                onClick={handleDeleteTag}
               >
-                Add tag
+                Delete
               </button>
             </div>
           );
         })}
+        <div key="InputForAddingTag">
+          <input
+            className={`${classes.input} ${classes.tag}`}
+            type="text"
+            name="InputForAddingTag"
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            placeholder="Tag"
+          />
+          <button
+            type="button"
+            className={`${classes['tag-button']} ${classes.add}`}
+            onClick={handleAddTag}
+          >
+            Add tag
+          </button>
+        </div>
         <button type="submit" className={classes.submit}>
           Send
         </button>
