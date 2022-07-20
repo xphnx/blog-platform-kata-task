@@ -71,7 +71,7 @@ const ArticleForm: FC<ArticleFormProps> = ({
   };
 
   const handleAddTag = (): void => {
-    tags.push({ id: uuidv4(), value: newTag });
+    if (newTag) tags.push({ id: uuidv4(), value: newTag });
     setTag(tags);
     setNewTag('');
   };
