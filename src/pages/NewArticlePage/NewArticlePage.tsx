@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import ArticleForm from '../../components/ArticleForm/ArticleForm.jsx';
+import ArticleForm from '../../components/ArticleForm/ArticleForm';
 import { createArticle } from '../../store/articlesSlice';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Notification from '../../components/Notification/Notification';

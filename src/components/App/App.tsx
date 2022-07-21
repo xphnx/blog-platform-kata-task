@@ -4,7 +4,7 @@ import RequireAuth from '../../hoc/RequireAuth';
 import UserAuthorized from '../../hoc/UserAuthorized';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import ArticlesListPage from '../../pages/ArticlesListPage/ArticlesListPage';
-import EditArticlePage from '../../pages/EditArticlePage/EditArticlePage.jsx';
+import EditArticlePage from '../../pages/EditArticlePage/EditArticlePage';
 import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
 import NewArticlePage from '../../pages/NewArticlePage/NewArticlePage';
 import SignInPage from '../../pages/SignInPage/SignInPage';

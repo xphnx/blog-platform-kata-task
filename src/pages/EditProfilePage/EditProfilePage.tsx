@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
