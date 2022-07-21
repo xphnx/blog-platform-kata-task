@@ -16,8 +16,6 @@ const EditArticlePage = () => {
   const [pageLoading, setPageLoading] = useState(true);
   const { user } = useAppSelector((state) => state.user);
 
-  console.log('tick');
-
   useEffect(() => {
     async function getArticle() {
       const { payload } = await dispatch(fetchBySlug(slug));
@@ -28,7 +26,6 @@ const EditArticlePage = () => {
 
   useEffect(() => {
     if (user && article) {
-      console.log(user, article);
       if (user.username !== article.author.username) {
         navigate('/', { replace: true });
       } else {
