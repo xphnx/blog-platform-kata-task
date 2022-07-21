@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import ArticleForm from '../../components/ArticleForm/ArticleForm';
+import React, { FC } from 'react';
+import ArticleForm from '../../components/ArticleForm/ArticleForm.jsx';
 import { createArticle } from '../../store/articlesSlice';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Notification from '../../components/Notification/Notification';
@@ -8,7 +8,6 @@ export type createArticleAction = typeof createArticle;
 
 const NewArticlePage: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [tags, setTag] = useState<any>([]);
   const { error } = useAppSelector((state) => state.articles);
   return (
     <>
@@ -16,8 +15,7 @@ const NewArticlePage: FC = () => {
       <ArticleForm
         action={createArticle}
         title="Create New Article"
-        tags={tags}
-        setTag={setTag}
+        article={undefined}
       />
     </>
   );

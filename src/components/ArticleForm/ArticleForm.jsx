@@ -1,52 +1,39 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { FC, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { updateArticleAction } from '../../pages/EditArticlePage/EditArticlePage';
-import { createArticleAction } from '../../pages/NewArticlePage/NewArticlePage';
 
-import { ArticleType, UpdateArticle } from '../../store/articlesSlice/types';
 import classes from './ArticleForm.module.scss';
 
-interface Tag {
-  id: string;
-  value: string;
-}
-
-interface ArticleFormProps {
-  article?: ArticleType;
-  title: string;
-  action: createArticleAction | updateArticleAction;
-  tags: Tag[];
-  setTag: React.Dispatch<React.SetStateAction<Tag[]>>;
-}
-
-const ArticleForm: FC<ArticleFormProps> = ({
-  action,
-  title,
-  tags,
-  setTag,
-  article,
-}) => {
+const ArticleForm = ({ action, title, article }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UpdateArticle>();
+  } = useForm();
 
+  const [tags, setTag] = useState([]);
   const [newTag, setNewTag] = useState('');
 
-  const onSubmit: SubmitHandler<UpdateArticle> = async (data) => {
+  useEffect(() => {
+    const tgs =
+      article?.tagList.map((tag) => ({ id: uuidv4(), value: tag })) || [];
+    setTag(tgs);
+  }, [article]);
+
+  const onSubmit = async (data) => {
     const tagsValues = tags
-      .map((tag) => tag.value.trim())
+      ?.map((tag) => tag.value.trim())
       .filter((value) => value);
     const newArticle = { ...data };
 
-    if (tagsValues.length) newArticle.tagList = tagsValues;
+    if (tagsValues?.length) newArticle.tagList = tagsValues;
     if (article?.slug) newArticle.slug = article?.slug;
 
     const {
@@ -61,8 +48,8 @@ const ArticleForm: FC<ArticleFormProps> = ({
       navigate(`/articles/${slug}`, { replace: true });
   };
 
-  const changeTagHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const updatedTags = tags.map((tag) => {
+  const changeTagHandler = (e) => {
+    const updatedTags = tags?.map((tag) => {
       const tg = tag;
       if (tg.id === e.target.name) tg.value = e.target.value;
       return tg;
@@ -70,15 +57,15 @@ const ArticleForm: FC<ArticleFormProps> = ({
     if (e.target.name !== 'First') setTag(updatedTags);
   };
 
-  const handleAddTag = (): void => {
-    if (newTag) tags.push({ id: uuidv4(), value: newTag });
+  const handleAddTag = () => {
+    if (newTag) tags?.push({ id: uuidv4(), value: newTag });
     setTag(tags);
     setNewTag('');
   };
 
-  const handleDeleteTag = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    const { name } = e.target as HTMLButtonElement;
-    const updatedTags = tags.filter((tag) => tag.id !== name);
+  const handleDeleteTag = (e) => {
+    const { name } = e.target;
+    const updatedTags = tags?.filter((tag) => tag.id !== name);
     setTag(updatedTags);
   };
 
@@ -137,7 +124,7 @@ const ArticleForm: FC<ArticleFormProps> = ({
           )}
         </label>
         <label className={classes.label}>Tag</label>
-        {tags.map((tag) => {
+        {tags?.map((tag) => {
           return (
             <div key={tag.id}>
               <input
